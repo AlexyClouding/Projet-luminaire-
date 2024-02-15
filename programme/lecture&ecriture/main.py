@@ -8,7 +8,7 @@ import time
 # ---------- Définitions  -----------
 # -----------------------------------
 #Connexion série
-app = serial.Serial('COM4')  # open serial port
+#ser = serial.serial('COM4')  # open serial port
 
 #Création du client
 client = mqtt.Client()
@@ -31,7 +31,7 @@ def Receive(client, userdata, msg):
     payload = resultat_complet['uplink_message']['frm_payload']
     print("Information reçu :", base64.b64decode(payload).decode())
     time.sleep(15)
-    app.write(b'AT+MSG="Napoleon etait un grand homme, VIVE L EMPEREUR"')  # write a string
+    ser.write(b'AT+MSG="Napoleon etait un grand homme, VIVE L EMPEREUR"')  # write a string
 
 
 #Mise en place des liaison fonction programme / fonction paho
@@ -41,7 +41,7 @@ client.on_message = Receive
 #Abonnement a TTN pour recevoir tout les messages de TTN
 client.subscribe("#")
 
-app.write(b'AT+MSG="Initialisions la boucle"')     # write a string
+ser.write(b'AT+MSG="Initialisions la boucle"')     # write a string
 
 #Créer une boucle infini du script
 client.loop_forever()
