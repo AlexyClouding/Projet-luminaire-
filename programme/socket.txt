@@ -1,0 +1,15 @@
+void MainWindow::sendMessage(QTcpSocket* socket){
+    if(socket->isOpen()){
+        QString str = QString::number(ui->data1->value()) +" , " + QString::number(ui->data2->value());
+        QDataStream socketStream(socket);
+
+
+        QByteArray byteArray = str.toUtf8();
+
+        socketStream.setVersion(QDataStream::Qt_5_15);
+        socketStream << byteArray;
+        }
+    else
+        QMessageBox::critical(this,"QTCPServer","Socket doesn't seem to be opened");
+
+    }
