@@ -14,6 +14,9 @@ MainWindow::MainWindow(QWidget *parent) :
     if (!serveur->listen(QHostAddress("127.0.0.1"), 151)) {
         qDebug() << "Erreur lors de l'écoute sur le port 151 : " << serveur->errorString();
     }
+    else {
+        ui->test->append("OPEN");
+    }
 }
 
 
@@ -42,8 +45,17 @@ void MainWindow::on_message()
 
         if(data=="A7s5D9b_"){
         ui->test->append("DeV_Id_is_valid");
-        QString msg= { "01003ABCC" };
-        QByteArray drop = msg.toUtf8();
+
+        QStringList msg = {"0x01", "0x03", "0xAB", "0xCC"}; // faire un tableau de chaine de charactère
+
+        QByteArray drop;   // Crée un tableau de byte
+
+        for (const QString &recup : msg) { //const QString &s fait référence à : msg fait appel a un string nommé msg
+
+            drop.append(recup.toInt(nullptr, 16));  // appel le tableau de byte pour ajouté à l'intérieur(append) un élément du tableau string(recup) et la boucle se répète tant que msg!=NULL
+        }
+
+
         socket->write(drop);
         ui->test->append("------------");
     }

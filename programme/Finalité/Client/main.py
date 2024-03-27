@@ -80,7 +80,7 @@ def connexionSocket(mysocket,hote,port):
 mysocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 connexionSocket(mysocket,"127.0.0.1",151)
 
-# Envoi de messages toutes les 5 secondes tant que la connexion est active
+# Envoi de messages toutes les 15 secondes tant que la connexion est active
 while True:
     try:
         device_id = "A7s5D9b_"
@@ -91,7 +91,7 @@ while True:
         print("Socket_recv:", reception)
         Envoi(reception)
         print("-----------------")
-        time.sleep(5)
+        time.sleep(15)
     except Exception as erreur:
         mysocket.close()
         time.sleep(10)
